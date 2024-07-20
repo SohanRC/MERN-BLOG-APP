@@ -3,17 +3,17 @@ import mongoose, { Schema } from "mongoose";
 const UserSchema = new Schema({
     username: {
         type: String,
-        required: true || "Username required !",
-        unique: true || "Username already taken !",
+        required: true,
+        unique: true,
     },
     email: {
         type: String,
-        required: true || "Username required !",
-        unique: true || "Username already taken !",
+        required: true,
+        unique: true,
     },
     password: {
         type: String,
-        required: true || "Username required !",
+        required: true,
     },
     profilePic: {
         type: String,
@@ -22,7 +22,7 @@ const UserSchema = new Schema({
     isAdmin: {
         type: String,
         default: false,
-        required: true || "Username required !",
+        required: true,
     },
     posts: [{ type: mongoose.ObjectId }]
 }, { timestamps: true })
