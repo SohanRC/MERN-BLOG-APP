@@ -89,7 +89,7 @@ export async function googleSignIn(req, res, next) {
             const hashedPassword = await bcryptjs.hash(randomPassword, 10);
 
             const newUser = await UserModel.create({
-                username: displayName,
+                username: displayName.toLowerCase().split(' ').join('') + Math.random().toString(9).slice(-4),
                 email,
                 password: hashedPassword,
                 profilePic: photoURL,
