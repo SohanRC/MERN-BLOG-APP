@@ -4,12 +4,18 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  important : '#root',
+  important: '#root',
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        roboto: ['"Roboto"', "sans-serif"],
+        montserrat: ['"Montserrat"', "sans-serif"],
+        bona_nova_sc : ['"Bona Nova SC"', "'Roboto'", 'sans-serif'],
+      }
+    },
   },
   plugins: [
   ],
-  darkMode : 'class'
+  darkMode: 'class'
 }
 
