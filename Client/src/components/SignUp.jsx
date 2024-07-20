@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form"
 import EmailIcon from '@mui/icons-material/Email';
@@ -7,8 +7,15 @@ import GoogleIcon from '@mui/icons-material/Google';
 import Input from "./Input";
 import { Link } from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import authService from "../api/AuthService";
+import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function SignUp() {
+
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
@@ -18,8 +25,21 @@ export default function SignUp() {
         }
     })
 
-    const submitEventHandler = (data) => {
-        console.log(data)
+    const submitEventHandler = async (data) => {
+        setLoading(true)
+        let res = await authService.signup(data);
+        if (!res.data) {
+            // error
+            let { response: { data: { message } } } = res; // err message
+            toast.error(message);
+            console.log(res)
+            setLoading(false)
+            return;
+        }
+
+        toast.success(res.data.message);
+        navigate('/signin');
+        return;
     }
 
     return (
@@ -47,7 +67,7 @@ export default function SignUp() {
                                         }
                                     })}
                                 />
-                                <p className="text-red-600">{ errors.username?.message }</p>
+                                <p className="text-red-600">{errors.username?.message}</p>
                             </div>
                             <div className="flex flex-col">
                                 <label htmlFor="email" className="cursor-pointer font-semibold mb-2">Your Email</label>
@@ -60,10 +80,14 @@ export default function SignUp() {
                                         required: {
                                             value: true,
                                             message: "Email Required !",
+                                        },
+                                        pattern: {
+                                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g,
+                                            message: "Invalid Email Format!"
                                         }
                                     })}
                                 />
-                                <p className="text-red-600">{ errors.email?.message }</p>
+                                <p className="text-red-600">{errors.email?.message}</p>
                             </div>
                             <div className="flex flex-col">
                                 <label htmlFor="email" className="cursor-pointer font-semibold mb-2">Your Password</label>
@@ -76,10 +100,14 @@ export default function SignUp() {
                                         required: {
                                             value: true,
                                             message: "Password Required !",
+                                        },
+                                        minLength: {
+                                            value: 5,
+                                            message: "Minimum length should be 5",
                                         }
                                     })}
                                 />
-                                <p className="text-red-600">{ errors.password?.message }</p>
+                                <p className="text-red-600">{errors.password?.message}</p>
                             </div>
 
                             <Button
@@ -90,8 +118,11 @@ export default function SignUp() {
                                 sx={{
                                     fontSize: { lg: 20, md: 15, xs: 10 },
                                 }}
+                                disabled={loading}
                             >
-                                Submit
+                                {
+                                    loading ? "Signing Up..." : "Sign Up"
+                                }
                             </Button>
                             <Button
                                 variant="outlined"
@@ -102,8 +133,12 @@ export default function SignUp() {
                                     fontSize: { lg: 20, md: 15, xs: 10 },
                                 }}
                                 className="font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white"
+                                disabled={loading}
                             >
-                                Continue With Google
+                                {
+                                    loading ? "Signing Up..." : "Continue With Google"
+                                }
+
                             </Button>
                             <div>
                                 <p className="font-semibold">Already Have An Account ? </p>

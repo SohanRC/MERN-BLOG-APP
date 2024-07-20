@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form"
 import EmailIcon from '@mui/icons-material/Email';
@@ -6,9 +6,10 @@ import LockIcon from '@mui/icons-material/Lock';
 import GoogleIcon from '@mui/icons-material/Google';
 import Input from "./Input";
 import { Link } from "react-router-dom";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import authService from "../api/AuthService";
 
 export default function SignIn() {
+    const [loading, setLoading] = useState(false);
 
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
@@ -17,8 +18,22 @@ export default function SignIn() {
         }
     })
 
-    const submitEventHandler = (data) => {
-        console.log(data)
+    const submitEventHandler = async (data) => {
+        setLoading(true)
+        let res = await authService.signin(data);
+        if (!res.data) {
+            // error
+            let { response: { data: { message } } } = res; // err message
+            toast.error(message);
+            console.log(res)
+            setLoading(false)
+            return;
+        }
+
+        toast.success(res.data.message);
+        setLoading(false)
+        // navigate('/signin');
+        return;
     }
 
     return (
@@ -43,6 +58,10 @@ export default function SignIn() {
                                         required: {
                                             value: true,
                                             message: "Email Required !",
+                                        },
+                                        pattern: {
+                                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g,
+                                            message : "Invalid Email Format!"
                                         }
                                     })}
                                 />
@@ -59,6 +78,10 @@ export default function SignIn() {
                                         required: {
                                             value: true,
                                             message: "Password Required !",
+                                        },
+                                        minLength: {
+                                            value: 5,
+                                            message : "Minimum length should be 5",
                                         }
                                     })}
                                 />
@@ -73,8 +96,11 @@ export default function SignIn() {
                                 sx={{
                                     fontSize: { lg: 20, md: 15, xs: 10 },
                                 }}
+                                disabled={loading ? true : false}
                             >
-                                Submit
+                                {
+                                    loading ? "Signing In..." : "Sign In"
+                                }
                             </Button>
                             <Button
                                 variant="outlined"
@@ -85,8 +111,11 @@ export default function SignIn() {
                                     fontSize: { lg: 20, md: 15, xs: 10 },
                                 }}
                                 className="font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white"
+                                disabled={loading ? true : false}
                             >
-                                Continue With Google
+                                {
+                                    loading ? "Signing In..." : "Continue With Google"
+                                }
                             </Button>
                             <div>
                                 <p className="font-semibold">Don't Have An Account ? </p>
