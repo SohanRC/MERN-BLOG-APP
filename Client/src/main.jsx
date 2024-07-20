@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom"
-import {HomePage, AboutPage, ProjectPage, SignInPage, SignUpPage, DashboardPage} from "./pages/pages.js"
+import { HomePage, AboutPage, ProjectPage, SignInPage, SignUpPage, DashboardPage } from "./pages/pages.js"
+import { Provider } from "react-redux"
+import { store, persistor } from './store/store.js'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -19,7 +22,11 @@ const router = createBrowserRouter(
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <RouterProvider router={router}>
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <RouterProvider router={router}>
+            </RouterProvider>
+        </PersistGate>
+    </Provider>
 
-    </RouterProvider>
 )

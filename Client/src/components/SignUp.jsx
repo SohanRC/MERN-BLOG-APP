@@ -10,11 +10,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import authService from "../api/AuthService";
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../store/UserSlice";
 
 export default function SignUp() {
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
@@ -39,6 +42,30 @@ export default function SignUp() {
         toast.success(res.data.message);
         navigate('/signin');
         return;
+    }
+
+    const handleGoogleLogin = async () => {
+        setLoading(true)
+        try {
+            let res = await authService.googleSignIn();
+            console.log(res)
+            if (!res.data) {
+                // error
+                let { response: { data: { message } } } = res; // err message
+                toast.error(message);
+                setLoading(false)
+                return;
+            }
+
+            dispatch(login(res.data.user))
+            toast.success(res.data.message);
+            setLoading(false)
+            navigate('/');
+            return;
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
     }
 
     return (
@@ -133,6 +160,7 @@ export default function SignUp() {
                                 }}
                                 className="font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white"
                                 disabled={loading}
+                                onClick={handleGoogleLogin}
                             >
                                 {
                                     loading ? "Signing Up..." : "Continue With Google"

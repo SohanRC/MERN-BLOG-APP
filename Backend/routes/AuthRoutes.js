@@ -1,10 +1,11 @@
 import express from "express"
 const router = express.Router();
-import {signIn, signUp} from "../controllers/AuthController.js";
+import {googleSignIn, signIn, signUp} from "../controllers/AuthController.js";
 
 
 router.post('/signin', signIn)
 router.post('/signup', signUp)
+router.post('/googleSignIn', googleSignIn)
 
 
 

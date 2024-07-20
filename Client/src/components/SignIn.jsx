@@ -8,9 +8,14 @@ import Input from "./Input";
 import { Link } from "react-router-dom";
 import authService from "../api/AuthService";
 import toast from "react-hot-toast"
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../store/UserSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
@@ -32,15 +37,40 @@ export default function SignIn() {
                 return;
             }
 
+            dispatch(login(res.data.user))
             toast.success(res.data.message);
             setLoading(false)
-            // navigate('/signin');
+            navigate('/');
             return;
         } catch (error) {
             console.log(error)
             setLoading(false)
         }
 
+    }
+
+    const handleGoogleLogin = async () => {
+        setLoading(true)
+        try {
+            let res = await authService.googleSignIn();
+            console.log(res)
+            if (!res.data) {
+                // error
+                let { response: { data: { message } } } = res; // err message
+                toast.error(message);
+                setLoading(false)
+                return;
+            }
+
+            dispatch(login(res.data.user))
+            toast.success(res.data.message);
+            setLoading(false)
+            navigate('/');
+            return;
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
     }
 
     return (
@@ -119,6 +149,7 @@ export default function SignIn() {
                                 }}
                                 className="font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white"
                                 disabled={loading ? true : false}
+                                onClick={handleGoogleLogin}
                             >
                                 {
                                     loading ? "Signing In..." : "Continue With Google"

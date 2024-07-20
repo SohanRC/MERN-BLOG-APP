@@ -58,3 +58,60 @@ export async function signUp(req, res, next) {
         next(error)
     }
 }
+
+export async function googleSignIn(req, res, next) {
+    try {
+        const { displayName, email, photoURL } = req.body;
+        const existingUser = await UserModel.findOne({ email })
+
+        if (existingUser) {
+            // already registered (signup)
+            const tokenOptions = {
+                expiresIn: 1000 * 60 * 60 * 2,
+            }
+
+            const token = jwt.sign({
+                userId: existingUser._id,
+            }, process.env.JWT_SECRET, tokenOptions)
+
+            const { password: hashedPassword, ...restUserDetails } = existingUser._doc;
+
+            return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 2, httpOnly: true, }).status(200).json({
+                success: true,
+                message: "User SignIn Successful !",
+                user: restUserDetails,
+            })
+        }
+        else {
+            // new joineee
+            const randomPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8)
+
+            const hashedPassword = await bcryptjs.hash(randomPassword, 10);
+
+            const newUser = await UserModel.create({
+                username: displayName,
+                email,
+                password: hashedPassword,
+                profilePic: photoURL,
+            })
+
+            const tokenOptions = {
+                expiresIn: 1000 * 60 * 60 * 2,
+            }
+
+            const token = jwt.sign({
+                userId: newUser._id,
+            }, process.env.JWT_SECRET, tokenOptions)
+
+            const { password: hash, ...restUserDetails } = newUser._doc;
+
+            return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 2, httpOnly: true, }).status(200).json({
+                success: true,
+                message: "User SignUP Successful !",
+                user: restUserDetails,
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+}
