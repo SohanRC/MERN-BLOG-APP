@@ -1,9 +1,39 @@
 import UserModel from "../models/UserModel.js";
 import errorHandler from "../utils/errorhandler.js";
 import bcryptjs from "bcryptjs"
+import jwt from "jsonwebtoken"
+import { config } from "dotenv"
+config();
 
-export async function signIn(req, res) {
-    res.json({ message: "Sign In Controller" })
+
+export async function signIn(req, res, next) {
+    const { email, password } = req.body;
+    try {
+        let existingUser = await UserModel.findOne({ email });
+        if (!existingUser) next(errorHandler(404, "User Not Found !"));
+
+        let result = await bcryptjs.compare(password, existingUser.password);
+        if (!result) next(errorHandler(404, "Incorrect Password !"));
+
+        const tokenOptions = {
+            expiresIn: 1000 * 60 * 60 * 2,
+        }
+
+        const token = jwt.sign({
+            userId: existingUser._id,
+        }, process.env.JWT_SECRET, tokenOptions)
+
+        const { password: hashedPassword, ...restUserDetails } = existingUser._doc;
+
+        return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 2, httpOnly: true, }).status(200).json({
+            success: true,
+            message: "User SignIn Successful !",
+            user: restUserDetails,
+        })
+
+    } catch (error) {
+        next(error)
+    }
 }
 
 export async function signUp(req, res, next) {

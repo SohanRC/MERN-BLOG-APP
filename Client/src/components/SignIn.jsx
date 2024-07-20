@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import { Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form"
 import EmailIcon from '@mui/icons-material/Email';
@@ -7,6 +7,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import Input from "./Input";
 import { Link } from "react-router-dom";
 import authService from "../api/AuthService";
+import toast from "react-hot-toast"
 
 export default function SignIn() {
     const [loading, setLoading] = useState(false);
@@ -20,20 +21,26 @@ export default function SignIn() {
 
     const submitEventHandler = async (data) => {
         setLoading(true)
-        let res = await authService.signin(data);
-        if (!res.data) {
-            // error
-            let { response: { data: { message } } } = res; // err message
-            toast.error(message);
+        try {
+            let res = await authService.signin(data);
             console.log(res)
+            if (!res.data) {
+                // error
+                let { response: { data: { message } } } = res; // err message
+                toast.error(message);
+                setLoading(false)
+                return;
+            }
+
+            toast.success(res.data.message);
             setLoading(false)
+            // navigate('/signin');
             return;
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
         }
 
-        toast.success(res.data.message);
-        setLoading(false)
-        // navigate('/signin');
-        return;
     }
 
     return (
@@ -61,11 +68,11 @@ export default function SignIn() {
                                         },
                                         pattern: {
                                             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g,
-                                            message : "Invalid Email Format!"
+                                            message: "Invalid Email Format!"
                                         }
                                     })}
                                 />
-                                <p className="text-red-600">{ errors.email?.message }</p>
+                                <p className="text-red-600">{errors.email?.message}</p>
                             </div>
                             <div className="flex flex-col">
                                 <label htmlFor="email" className="cursor-pointer font-semibold mb-2">Your Password</label>
@@ -81,11 +88,11 @@ export default function SignIn() {
                                         },
                                         minLength: {
                                             value: 5,
-                                            message : "Minimum length should be 5",
+                                            message: "Minimum length should be 5",
                                         }
                                     })}
                                 />
-                                <p className="text-red-600">{ errors.password?.message }</p>
+                                <p className="text-red-600">{errors.password?.message}</p>
                             </div>
 
                             <Button

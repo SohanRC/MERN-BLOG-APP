@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack, IconButton, Divider} from '@mui/material'
+import { Stack, IconButton, Divider } from '@mui/material'
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -15,21 +15,21 @@ export default function Footer() {
                 </div>
                 <div className='p-2'>
                     <Stack spacing={2} direction="row" flexWrap='wrap'>
-                        <IconButton  color='inherit'>
-                            <InstagramIcon  color='error' sx={{bgcolor : 'white'}} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250'/>
+                        <IconButton color='inherit'>
+                            <InstagramIcon color='error' sx={{ bgcolor: 'white' }} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250' />
                         </IconButton >
                         <IconButton color='inherit'>
-                            <FacebookIcon  color='primary' sx={{bgcolor : 'white'}} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250'/>
+                            <FacebookIcon color='primary' sx={{ bgcolor: 'white' }} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250' />
                         </IconButton >
                         <IconButton color='inherit'>
-                            <LinkedInIcon  color='primary' sx={{bgcolor : 'white'}} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250'/>
+                            <LinkedInIcon color='primary' sx={{ bgcolor: 'white' }} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250' />
                         </IconButton>
                     </Stack>
                 </div>
             </div>
-            <Divider sx={{bgcolor : 'white', mx : 2}}/>
+            <Divider sx={{ bgcolor: 'white', mx: 2 }} />
             <div className='p-2 text-center text-wrap'>
-                <h1 className='font-bold tracking-wider xs:text-sm md:text-xl'>@Sohan RoyChowdhury | 2024</h1>
+                <h1 className='font-bold tracking-wider xs:text-sm md:text-xl'>@Sohan RoyChowdhury | {new Date().getFullYear()}</h1>
             </div>
         </div>
     )

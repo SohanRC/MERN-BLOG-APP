@@ -10,7 +10,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import authService from "../api/AuthService";
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom";
-import CircularProgress from '@mui/material/CircularProgress';
 
 export default function SignUp() {
 
