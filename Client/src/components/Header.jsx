@@ -81,10 +81,12 @@ function Header(props) {
     dispatch(setTheme());
   }
 
+  // #006064
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar component="nav" sx={{ backgroundColor: '#006064' }} position='sticky'>
+      <AppBar component="nav" sx={{ backgroundColor: '#006064',}} position='sticky' className="dark:bg-[rgb(31,41,55)]">
         <Toolbar sx={{ flexWrap: 'wrap' }}>
           <Typography
             variant="h5"

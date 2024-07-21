@@ -6,7 +6,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 export default function Footer() {
     return (
-        <div className='bg-[#006064] text-white p-4 font-serif tracking-wide'>
+        <div className='bg-[#006064] text-white p-4 font-serif tracking-wide dark:bg-[rgb(31,41,55)] dark:border-t-2 dark:border-teal-500'>
             <div className='flex flex-col items-center gap-3 flex-wrap'>
                 <div className='text-center flex flex-col gap-2 flex-wrap'>
                     <h1 className='font-bold tracking-wider xs:text-2xl md:text-3xl'>Sohan RoyChowdhury</h1>
