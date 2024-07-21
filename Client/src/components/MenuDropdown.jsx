@@ -3,11 +3,13 @@ import { Menu, MenuItem, Button } from "@mui/material"
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store/UserSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuDropdown() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -19,6 +21,7 @@ export default function MenuDropdown() {
     const handleSignout = () => {
         handleClose();
         dispatch(logout());
+        navigate('/signin');
     }
 
     const user = useSelector((state) => state.user.userData)

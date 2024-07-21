@@ -73,7 +73,7 @@ export default function SignIn() {
     }
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center">
+        <div className="min-h-screen w-full flex items-center justify-center dark:text-gray-700">
             <div className="flex justify-center border-2 border-slate-500 items-center gap-5 py-10 px-4 rounded-lg flex-wrap bg-slate-200">
                 <div className="max-w-[50%] flex flex-col items-start gap-2">
                     <h1 className="text-xl md:text-3xl font-serif p-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white rounded-lg">Sohan's Blog</h1>

@@ -17,9 +17,10 @@ import Button from '@mui/material/Button';
 import { Link, useLocation } from 'react-router-dom';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { useState } from 'react';
-import { useSelector } from "react-redux"
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux"
 import MenuDropdown from './MenuDropdown';
+import {setTheme} from "../store/ThemeSlice"
 
 const drawerWidth = 240;
 const navItems = [
@@ -40,9 +41,11 @@ const navItems = [
 function Header(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [theme, setTheme] = useState("dark");
+  const theme = useSelector((state) => state.theme.theme)
   const location = useLocation().pathname;
+  const dispatch = useDispatch();
 
+  
 
   const authStatus = useSelector((state) => state.user.isAuthenticated)
 
@@ -75,9 +78,7 @@ function Header(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   const handleThemeChange = () => {
-    setTheme((prev) => (prev === 'light') ? 'dark' : 'light');
-
-    document.querySelector('html').classList.toggle('dark');
+    dispatch(setTheme());
   }
 
   return (
@@ -132,7 +133,7 @@ function Header(props) {
             aria-label='theme-btn'
             sx={{ mr: 2, ml: 2 }}
           >
-            {(theme === 'light' ? <LightModeIcon /> : <DarkModeIcon />)}
+            {(theme === 'dark' ? <LightModeIcon /> : <DarkModeIcon />)}
           </IconButton>
         </Toolbar>
 
