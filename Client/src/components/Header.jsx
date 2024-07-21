@@ -18,6 +18,8 @@ import { Link, useLocation } from 'react-router-dom';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useState } from 'react';
+import { useSelector } from "react-redux"
+import MenuDropdown from './MenuDropdown';
 
 const drawerWidth = 240;
 const navItems = [
@@ -40,6 +42,10 @@ function Header(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [theme, setTheme] = useState("dark");
   const location = useLocation().pathname;
+
+
+  const authStatus = useSelector((state) => state.user.isAuthenticated)
+
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -107,12 +113,19 @@ function Header(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Link to='/signin'>
-            <Button variant='contained' size='small' sx={{
-              color: 'white',
-              backgroundColor: '#f50057'
-            }} className='hover:bg-rose-600 md:text-[1rem]'>Sign In</Button>
-          </Link>
+
+          {
+            authStatus ?
+              <MenuDropdown />
+              :
+              <Link to='/signin'>
+              <Button variant='contained' size='small' sx={{
+                color: 'white',
+                backgroundColor: '#f50057'
+              }} className='hover:bg-rose-600 md:text-[1rem]'>Sign In</Button>
+            </Link>
+          }
+
           <IconButton
             color='inherit'
             onClick={handleThemeChange}

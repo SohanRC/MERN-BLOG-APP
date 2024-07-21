@@ -48,7 +48,6 @@ export default function SignUp() {
         setLoading(true)
         try {
             let res = await authService.googleSignIn();
-            console.log(res)
             if (!res.data) {
                 // error
                 let { response: { data: { message } } } = res; // err message

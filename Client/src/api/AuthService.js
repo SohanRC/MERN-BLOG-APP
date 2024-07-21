@@ -40,10 +40,13 @@ class AuthService {
             });
         } catch (error) {
             console.log("Error : ", error);
+            // error like axios
             const response = {
-                data: {
-                    success: false,
-                    message: "Could Not login !",
+                response: {
+                    data: {
+                        success: false,
+                        message: "Could Not login !",
+                    }
                 }
             }
             return response;
