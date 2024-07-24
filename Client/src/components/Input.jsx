@@ -9,6 +9,7 @@ const Input = forwardRef(function Input({
     type,
     Icon,
     label,
+    ...props
 }, ref) {
     return (
 
@@ -27,7 +28,7 @@ const Input = forwardRef(function Input({
                         },
                     }}
                     sx={{
-
+                        width: { md: "19rem", sm: "16rem" },
                     }}
                     value={value}
                     onChange={onChange}

@@ -104,7 +104,7 @@ export default function SignIn() {
                                 <p className="text-red-600">{errors.email?.message}</p>
                             </div>
                             <div className="flex flex-col">
-                                <label htmlFor="email" className="cursor-pointer font-semibold mb-2">Your Password</label>
+                                <label htmlFor="password" className="cursor-pointer font-semibold mb-2">Your Password</label>
                                 <Input
                                     label="Password"
                                     type="password"

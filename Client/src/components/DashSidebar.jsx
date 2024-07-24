@@ -16,7 +16,7 @@ export default function DashSidebar({ tab }) {
         dispatch(logout());
     }
     return (
-        <div className='w-screen md:min-h-screen bg-slate-200 md:w-56 dark:bg-[rgb(31,41,55)] flex flex-col gap-5 p-10'>
+        <div className='w-screen md:min-h-screen md:w-56 flex flex-col gap-5 p-10'>
             <div className={`text-center ${tab === 'profile' ? 'bg-slate-300 text-black' : null} text-xl font-montserrat p-2 rounded-md`}>
                 <Link to='/dashboard?tab=profile' className='flex gap-2 items-center'>
                     <IconButton>

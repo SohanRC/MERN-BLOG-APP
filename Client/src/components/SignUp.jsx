@@ -79,7 +79,7 @@ export default function SignUp() {
                     <form action="" onSubmit={handleSubmit(submitEventHandler)} className="w-full">
                         <Stack direction="column" spacing={2}>
                             <div className="flex flex-col">
-                                <label htmlFor="email" className="cursor-pointer font-semibold mb-2">Your Username</label>
+                                <label htmlFor="username" className="cursor-pointer font-semibold mb-2">Your Username</label>
                                 <Input
                                     label="Username"
                                     type="username"
@@ -115,7 +115,7 @@ export default function SignUp() {
                                 <p className="text-red-600">{errors.email?.message}</p>
                             </div>
                             <div className="flex flex-col">
-                                <label htmlFor="email" className="cursor-pointer font-semibold mb-2">Your Password</label>
+                                <label htmlFor="password" className="cursor-pointer font-semibold mb-2">Your Password</label>
                                 <Input
                                     label="Password"
                                     type="password"

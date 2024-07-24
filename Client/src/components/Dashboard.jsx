@@ -15,7 +15,7 @@ export default function Dashboard() {
     }, [location.search])
     return (
         <div className='flex md:flex-row flex-col'>
-            <div>
+            <div className=' bg-slate-200 md:w-56 dark:bg-[rgb(31,41,55)]'>
                 {/* SideBar */}
                 <DashSidebar tab={tab} />
             </div>
