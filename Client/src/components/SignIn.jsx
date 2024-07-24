@@ -28,7 +28,6 @@ export default function SignIn() {
         setLoading(true)
         try {
             let res = await authService.signin(data);
-            console.log(res)
             if (!res.data) {
                 // error
                 let { response: { data: { message } } } = res; // err message

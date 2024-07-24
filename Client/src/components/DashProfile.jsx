@@ -16,9 +16,9 @@ export default function DashProfile() {
   const user = useSelector(state => state.user.userData)
   const inputFileRef = useRef();
   const [loading, setLoading] = useState(false)
-  const [currentImageSrc, setCurrentImageSrc] = useState(user.profilePic)
-  const [prevImageId, setPrevImageId] = useState(null);
   const [uploadLoading, setUploadLoading] = useState(false)
+  const currentImageSrcRef = useRef(user.profilePic);
+  const [imageFile, setImageFile] = useState(null)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,40 +32,43 @@ export default function DashProfile() {
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
-    try {
-      setUploadLoading(true);
+    if (file) {
+      setImageFile(file)
+      currentImageSrcRef.current = URL.createObjectURL(file);
+      // setCurrentImageSrc(URL.createObjectURL(file)); // temp url to display
+    }
+  }
 
-      let response = await userService.uploadImage(file);
-      if (!response.data) {
+  const uploadImage = async () => {
+    if (!imageFile) return;
+    try {
+      // upload image
+      setUploadLoading(true);
+      let imageResponse = await userService.uploadImage(imageFile);
+      if (!imageResponse.data) {
         setUploadLoading(false)
         toast.error("Could Not Upload Image !");
         return;
       }
-      const { uploadedImage } = response.data
-      setCurrentImageSrc(uploadedImage.secure_url)
-
-      // delete prev uploaded image
-      if (prevImageId) {
-        await userService.deleteImage(prevImageId);
-      }
-
-      setPrevImageId(uploadedImage.public_id);
+      const { uploadedImage } = imageResponse.data
+      currentImageSrcRef.current = uploadedImage.secure_url;
+      // setCurrentImageSrc(uploadedImage.secure_url)
       setUploadLoading(false)
-      toast.success('Image Upload Successful !');
-      return;
     } catch (error) {
       console.log(error)
       setUploadLoading(false)
-      return false
+      return error;
     }
   }
 
   const submit = async (data) => {
     try {
-      setLoading(true)
+
+      await uploadImage();
+      // update user
       let response = await userService.updateUser({
         ...data,
-        imageUrl: currentImageSrc,
+        imageUrl: currentImageSrcRef.current,
       }, user._id);
 
       if (!response.data) {
@@ -77,14 +80,18 @@ export default function DashProfile() {
 
       toast.success("User Updated !");
       setLoading(false)
-      console.log("Updated User : ", response.data.user);
       dispatch(login(response.data.user));
       navigate('/');
-    } catch (error) {
+      return;
+    }
+    catch (error) {
       console.log(error)
+      setUploadLoading(false)
       setLoading(false)
+      return;
     }
   }
+
 
   const deleteUser = async () => {
     try {
@@ -116,7 +123,7 @@ export default function DashProfile() {
             onChange={handleImageUpload}
           />
 
-          <img src={currentImageSrc} alt="Profile Pic" className='h-32 w-32 cursor-pointer rounded-full object-cover object-center' onClick={() => inputFileRef.current.click()} />
+          <img src={currentImageSrcRef.current} alt="Profile Pic" className='h-32 w-32 cursor-pointer rounded-full object-cover object-center' onClick={() => inputFileRef.current.click()} />
         </div>
         <p className='text-black text-xl'>{uploadLoading ? "Uploading... Wait a bit !!!" : null}</p>
         <div>
