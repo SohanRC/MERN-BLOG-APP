@@ -24,11 +24,42 @@ class PostService {
                 category,
                 postPic: uploadedImage.secure_url,
                 description,
-            }, {withCredentials : true})
+            }, { withCredentials: true })
         } catch (error) {
             console.log(error)
             return error;
         }
+    }
+
+    async getPost(query) {
+        try {
+            let uri = '/post/getSearchPosts?';
+            for (let keys in query) uri = uri + `${keys}=${query[keys]}&`;
+            let arr = uri.split('')
+            arr.splice(arr.length - 1, 1);
+            uri = arr.join('');
+            return await axios.get(uri);
+        } catch (error) {
+            return error
+        }
+    }
+
+    async getAllPosts(query) {
+        try {
+            let uri = '/post/getSearchPosts?';
+            for (let keys in query) uri = uri + `${keys}=${query[keys]}&`;
+            let arr = uri.split('')
+            arr.splice(arr.length - 1, 1);
+            uri = arr.join('');
+            console.log(uri)
+            return await axios.get('/post/getSearchPosts');
+        } catch (error) {
+            return error
+        }
+    }
+
+    async deletePost(id) {
+        
     }
 }
 

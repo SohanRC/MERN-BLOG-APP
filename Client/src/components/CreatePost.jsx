@@ -55,15 +55,15 @@ export default function CreatePost() {
   const list = [
     {
       id: 1,
-      value: "React Js",
+      value: "react-js",
     },
     {
       id: 2,
-      value: "Next Js",
+      value: "next-js",
     },
     {
       id: 3,
-      value: "Javascipt",
+      value: "javascipt",
     },
   ]
 

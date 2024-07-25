@@ -28,7 +28,7 @@ const SelectComponent = forwardRef(function SelectComponent({
                         sx={{ width: "10rem" }}
                     >
                         {
-                            list.map((item) => <MenuItem key={item.id} value={item.value}>{item.value}</MenuItem>)
+                            list.map((item) => <MenuItem key={item.id} value={item.value}>{item.value.toUpperCase()}</MenuItem>)
                         }
                     </TextField>
                 </>

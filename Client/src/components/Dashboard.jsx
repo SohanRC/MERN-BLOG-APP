@@ -60,13 +60,13 @@ export default function Dashboard() {
                 {/* SideBar */}
                 <DashSidebar tab={tab} />
             </div>
-            <div>
+            <div className='flex justify-center items-center border-2 border-teal-500 w-full'>
                 {/* Render Part */}
                 {
                     dashDisplay.map((item) =>
                         (item.authStatus || item.authStatus === null) && item.tab === tab ?
                             (
-                                <div key={item.id}>
+                                <div key={item.id} className='h-full w-full'>
                                     {item.component}
                                 </div>
                             ) : null)

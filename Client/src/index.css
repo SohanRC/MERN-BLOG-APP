@@ -11,3 +11,7 @@
 .mce-content-body {
     @apply text-2xl
 }
+
+th, td{
+    @apply dark:text-white;
+}
