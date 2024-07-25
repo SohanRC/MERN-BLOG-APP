@@ -9,6 +9,9 @@ import { store, persistor } from './store/store.js'
 import { PersistGate } from 'redux-persist/integration/react'
 import ThemeProvider from './components/ThemeProvider.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx'
+import AdminPrivateRoute from './components/AdminPrivateRoute.jsx'
+import CreatePost from './components/CreatePost.jsx'
+import PostPage from './pages/PostPage.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -23,6 +26,12 @@ const router = createBrowserRouter(
                     <DashboardPage />
                 </PrivateRoute>
             } />
+            <Route path='create-post' element={
+                <AdminPrivateRoute>
+                    <CreatePost />
+                </AdminPrivateRoute>
+            } />
+            <Route path='/post/:postId' element={<PostPage />} />
         </Route>
     )
 )

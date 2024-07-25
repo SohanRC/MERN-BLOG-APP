@@ -3,8 +3,9 @@ import { config } from "dotenv"
 config();
 import cors from "cors"
 import { dbConnect } from "./config/dbConnect.js";
-import { AuthRoutes, UserRoutes } from "./routes/routes.js";
+import { AuthRoutes, UserRoutes, PostRoutes } from "./routes/routes.js";
 import { v2 as cloudinary } from "cloudinary"
+import cookieParser from "cookie-parser";
 
 
 const app = express();
@@ -24,12 +25,14 @@ app.use(cors({
     origin: true,
     credentials: true,
 }))
+app.use(cookieParser());
 
 // ---------------------------------------------------
 
 // routers
 app.use('/api/auth', AuthRoutes)
 app.use('/api/user', UserRoutes)
+app.use('/api/post', PostRoutes)
 
 
 

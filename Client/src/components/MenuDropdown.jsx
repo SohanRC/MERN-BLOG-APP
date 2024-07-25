@@ -26,6 +26,34 @@ export default function MenuDropdown() {
 
     const user = useSelector((state) => state.user.userData)
 
+    const menuItems = [
+        {
+            text: "Dashboard",
+            url: "/dashboard?tab=dashboard",
+            authStatus: user.isAdmin,
+        },
+        {
+            text: "Profile",
+            url: "/dashboard?tab=profile",
+            authStatus: null,
+        },
+        // {
+        //     text: "Comments",
+        //     url: "/dashboard?tab=comments",
+        //     authStatus: user.isAuthenticated,
+        // },
+        // {
+        //     text: "Users",
+        //     url: "/dashboard?tab=users",
+        //     authStatus: user.isAuthenticated,
+        // },
+        // {
+        //     text: "Posts",
+        //     url: "/dashboard?tab=posts",
+        //     authStatus: user.isAuthenticated,
+        // },
+    ]
+
     return (
         <div>
             <Button
@@ -47,11 +75,15 @@ export default function MenuDropdown() {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleClose}>
-                    <Link to='/dashboard?tab=profile'>
-                        Profile
-                    </Link>
-                </MenuItem>
+                {
+                    menuItems.map((item) => item.authStatus || item.authStatus === null ? (
+                        <MenuItem onClick={handleClose} key={item.url}>
+                            <Link to={item.url}>
+                                {item.text}
+                            </Link>
+                        </MenuItem>
+                    ) : null)
+                }
                 <MenuItem onClick={handleSignout}>
                     SignOut
                 </MenuItem>

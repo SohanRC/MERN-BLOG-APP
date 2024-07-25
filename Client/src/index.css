@@ -4,3 +4,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ql-editor {
+    @apply text-xl sm:text-2xl 
+}
+.mce-content-body {
+    @apply text-2xl
+}

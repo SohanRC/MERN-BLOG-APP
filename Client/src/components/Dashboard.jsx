@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { useSearchParams, useLocation } from "react-router-dom"
+import React, { useState, useEffect, useId } from 'react'
+import { useSearchParams, useLocation, Navigate } from "react-router-dom"
 import DashSidebar from './DashSidebar';
 import DashProfile from './DashProfile';
 import Admin from './Admin';
+import { useSelector } from 'react-redux';
+import DashComments from './DashComments';
+import DashUsers from './DashUsers';
+import DashPosts from './DashPosts';
 
 export default function Dashboard() {
     const location = useLocation();
@@ -13,16 +17,60 @@ export default function Dashboard() {
         const urlTab = urlParams.get('tab');
         setTab(urlTab);
     }, [location.search])
+
+    const user = useSelector((state) => state.user.userData)
+
+    const dashDisplay = [
+        {
+            id : 1,
+            tab: "dashboard",
+            component: <Admin />,
+            authStatus: user.isAdmin,
+        },
+        {
+            id : 2,
+            tab: "profile",
+            component: <DashProfile />,
+            authStatus: null,
+        },
+        {
+            id: 3,
+            tab: "comments",
+            component: <DashComments />,
+            authStatus: user.isAdmin,
+        },
+        {
+            id : 4,
+            tab: "users",
+            component: <DashUsers />,
+            authStatus: user.isAdmin,
+        },
+        {
+            id : 5,
+            tab: "posts",
+            component: <DashPosts />,
+            authStatus: user.isAdmin,
+        },
+    ]
+
+
     return (
         <div className='flex md:flex-row flex-col'>
-            <div className=' bg-slate-200 md:w-56 dark:bg-[rgb(31,41,55)]'>
+            <div className=' bg-slate-200 md:w-68 dark:bg-[rgb(31,41,55)]'>
                 {/* SideBar */}
                 <DashSidebar tab={tab} />
             </div>
             <div>
                 {/* Render Part */}
-                {tab === 'profile' && <DashProfile />}
-                {/* {tab === 'dashboard' && <Admin />} */}
+                {
+                    dashDisplay.map((item) =>
+                        (item.authStatus || item.authStatus === null) && item.tab === tab ?
+                            (
+                                <div key={item.id}>
+                                    {item.component}
+                                </div>
+                            ) : null)
+                }
             </div>
         </div>
     )

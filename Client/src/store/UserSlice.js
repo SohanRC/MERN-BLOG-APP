@@ -17,10 +17,13 @@ const userSlice = createSlice({
         logout: (state, action) => {
             state.isAuthenticated = false,
             state.userData = null
+        },
+        update: (state, action) => {
+            state.userData = action.payload
         }
     }
 })
 
 export default userSlice.reducer; // to inform store
 
-export const { login, logout } = userSlice.actions; // for personal usage
+export const { login, logout , update} = userSlice.actions; // for personal usage

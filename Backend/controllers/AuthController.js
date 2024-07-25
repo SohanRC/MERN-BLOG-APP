@@ -21,6 +21,7 @@ export async function signIn(req, res, next) {
 
         const token = jwt.sign({
             userId: existingUser._id,
+            isAdmin : existingUser.isAdmin,
         }, process.env.JWT_SECRET, tokenOptions)
 
         const { password: hashedPassword, ...restUserDetails } = existingUser._doc;
@@ -72,6 +73,7 @@ export async function googleSignIn(req, res, next) {
 
             const token = jwt.sign({
                 userId: existingUser._id,
+                isAdmin : existingUser.isAdmin,
             }, process.env.JWT_SECRET, tokenOptions)
 
             const { password: hashedPassword, ...restUserDetails } = existingUser._doc;
@@ -101,6 +103,7 @@ export async function googleSignIn(req, res, next) {
 
             const token = jwt.sign({
                 userId: newUser._id,
+                isAdmin : newUser.isAdmin,
             }, process.env.JWT_SECRET, tokenOptions)
 
             const { password: hash, ...restUserDetails } = newUser._doc;
