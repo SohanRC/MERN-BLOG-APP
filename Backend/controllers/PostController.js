@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import PostModel from "../models/PostModel.js"
 import UserModel from "../models/UserModel.js";
 import errorHandler from "../utils/errorhandler.js"
@@ -81,6 +82,36 @@ export const getSearchPosts = async (req, res, next) => {
             posts,
             totalPosts,
             lastMonthCount
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const deletePost = async (req, res, next) => {
+    try {
+        console.log(req.params)
+        const { postId } = req.params;
+
+        // first delete the actual post
+        await PostModel.findOneAndDelete({ _id: postId });
+
+        // now delete the post id from the user
+        const { userId } = req.user;
+        const user = await UserModel.findOne({ _id: userId });
+        const existingPosts = user.posts; // array
+        const newPosts = existingPosts.filter((post) => post.postId != postId);
+
+        let updatedUser = await UserModel.findOneAndUpdate({ _id: userId }, {
+            posts: newPosts,
+        }, { new: true })
+
+        const { password: hash, ...restDetails } = updatedUser._doc;
+
+        return res.status(201).json({
+            success: true,
+            message: "Post Deleted Successfully !",
+            userData: restDetails
         })
     } catch (error) {
         next(error)

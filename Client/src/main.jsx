@@ -12,6 +12,7 @@ import PrivateRoute from './components/PrivateRoute.jsx'
 import AdminPrivateRoute from './components/AdminPrivateRoute.jsx'
 import CreatePost from './components/CreatePost.jsx'
 import PostPage from './pages/PostPage.jsx'
+import EditPost from './components/EditPost.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -31,7 +32,12 @@ const router = createBrowserRouter(
                     <CreatePost />
                 </AdminPrivateRoute>
             } />
-            <Route path='/post/:postId' element={<PostPage />} />
+            <Route path='post/:postId' element={<PostPage />} />
+            <Route path='edit-post/:postId' element={
+                <AdminPrivateRoute>
+                    <EditPost />
+                </AdminPrivateRoute>
+            } />
         </Route>
     )
 )

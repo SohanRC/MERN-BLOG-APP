@@ -66,7 +66,7 @@ export default function Dashboard() {
                     dashDisplay.map((item) =>
                         (item.authStatus || item.authStatus === null) && item.tab === tab ?
                             (
-                                <div key={item.id} className='h-full w-full'>
+                                <div key={item.id} className='h-full w-full grid place-items-center'>
                                     {item.component}
                                 </div>
                             ) : null)
