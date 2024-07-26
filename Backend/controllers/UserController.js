@@ -122,3 +122,37 @@ export const deleteUser = async (req, res, next) => {
         next(error)
     }
 }
+
+export const getAllUsers = async (req, res, next) => {
+    try {
+        const users = await UserModel.find({});
+
+        const usersWithoutPassword = users.map((user) => {
+            const { password: hash, ...restDetails } = user._doc;
+            return restDetails;
+        })
+
+        const totalUsers = await UserModel.countDocuments();
+
+        const now = new Date();
+        const lastMonth = new Date(
+            now.getFullYear(),
+            now.getMonth() - 1,
+            now.getDate()
+        )
+
+        const lastMonthUsers = await UserModel.countDocuments({
+            createdAt : {$gte : lastMonth}
+        })
+
+        return res.status(200).json({
+            success: true,
+            message: "All Users Fetched !",
+            users: usersWithoutPassword,
+            totalUsers,
+            lastMonthUsers
+        })
+    } catch (error) {
+        next(error)
+    }
+}

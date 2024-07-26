@@ -63,10 +63,46 @@ class PostService {
         try {
             return await axios.delete(`/post/deletePost/${postId}`, {
                 withCredentials: true,
-            });            
+            });
         } catch (error) {
             console.log(error)
             return error
+        }
+    }
+
+    async editPost(data, postId) {
+        try {
+            const { title, category, imageFile, description } = data;
+            if (imageFile) {
+                let imageResponse = await userService.uploadImage(imageFile[0]);
+                if (!imageResponse.data) {
+                    toast.error("Could Not Upload Image !");
+                    return;
+                }
+                const { uploadedImage } = imageResponse.data
+                toast.success('Image Uploaded Successfully !');
+
+                return await axios.patch(`/post/edit-post/${postId}`, {
+                    title,
+                    category,
+                    postPic: uploadedImage.secure_url,
+                    description,
+                }, {
+                    withCredentials: true
+                });
+            }
+            else {
+                return await axios.patch(`/post/edit-post/${postId}`, {
+                    title,
+                    category,
+                    description,
+                }, {
+                    withCredentials: true
+                });
+            }
+        } catch (error) {
+            console.log(error)
+            return;
         }
     }
 }

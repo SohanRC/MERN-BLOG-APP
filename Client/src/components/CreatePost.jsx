@@ -8,7 +8,7 @@ import postService from '../api/PostService';
 import { useSelector, useDispatch } from "react-redux"
 import toast from "react-hot-toast"
 import { useNavigate } from 'react-router-dom';
-import { update } from '../store/UserSlice';
+import { logout, update } from '../store/UserSlice';
 
 export default function CreatePost() {
 
@@ -35,14 +35,14 @@ export default function CreatePost() {
         const status = response.response.status;
         if (status === 401) {
           toast.error('Session Timed Out ! Login Again to Continue !');
+          dispatch(logout())
           navigate('/signin');
         }
         else if (status === 403) toast.error('User does not have permission to post!');
         return;
       }
 
-      let { message, user, postId } = response.data;
-      dispatch(update(user));
+      let { message, postId } = response.data;
       toast.success(message);
       navigate(`/post/${postId}`);
     } catch (error) {

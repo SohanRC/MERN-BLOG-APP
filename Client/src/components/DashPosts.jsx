@@ -13,8 +13,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { update } from '../store/UserSlice';
+import { logout, update } from '../store/UserSlice';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 
 export default function DashPosts() {
 
@@ -37,10 +38,11 @@ export default function DashPosts() {
         setLoading(false)
 
         if (!response.data) {
-          toast.error('Could Not Fetch Post ! Internal Server Error !')
+          toast.error('Session Timed Out !')
+          dispatch(logout());
+          navigate('/signin');
           return;
         }
-        console.log(response.data.posts)
         if (response.data.posts.length < 9) setShowMore(false)
         setPosts(response.data.posts);
         return;
@@ -53,7 +55,7 @@ export default function DashPosts() {
     }
 
     if (user.isAdmin) { getPosts(); }
-  }, [user])
+  }, [])
 
   const handleShowMore = async () => {
     try {
@@ -83,13 +85,19 @@ export default function DashPosts() {
       const response = await postService.deletePost(postId);
       setLoading(false)
       if (!response.data) {
-        toast.error('Could Not Delete Post !');
+        const status = response.response.status;
+        if (status === 401) {
+          toast.error('Session Timed Out ! Login Again to Continue !');
+          dispatch(logout())
+          navigate('/signin');
+        }
+        else if (status === 403) toast.error('User does not have permission to post!');
+        else toast.error('Cannot Delete Post !');
         return;
       }
 
       toast.success('Post Deleted !');
-      const { userData } = response.data;
-      dispatch(update(userData));
+      setPosts((prev) => prev.filter((post) => post._id != postId));
       return;
     } catch (error) {
       console.log(error)
@@ -104,7 +112,7 @@ export default function DashPosts() {
     </div>
   ) : posts?.length ? (
     <>
-      <TableContainer component={Paper} className='w-full bg-slate-100 dark:bg-[rgb(31,41,55)]'>
+      <TableContainer component={Paper} className='w-full bg-slate-100 dark:bg-[rgb(31,41,55)] self-start'>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className='w-full'>
           <TableHead>
             <TableRow>

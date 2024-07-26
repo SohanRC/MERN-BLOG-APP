@@ -24,11 +24,6 @@ const UserSchema = new Schema({
         default: false,
         required: true,
     },
-    posts: [{
-        postId: {
-            type: mongoose.ObjectId  
-        }
-    }]
 }, { timestamps: true })
 
 // collection

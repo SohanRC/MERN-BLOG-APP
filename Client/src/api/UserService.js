@@ -47,6 +47,17 @@ class UserService {
             return error
         }
     }
+
+    async getAllUsers() {
+        try {
+            return await axios.get('/user/getAllUsers', {
+                withCredentials : true,
+            });
+        } catch (error) {
+            console.log(error)
+            return error;
+        }
+    }
 }
 
 
