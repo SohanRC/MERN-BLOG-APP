@@ -7,6 +7,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import parse from 'html-react-parser'
+import Github from './Github';
 
 export default function Post() {
   const { postId } = useParams();
@@ -53,13 +54,13 @@ export default function Post() {
         </div>
         :
         <div className='max-w-6xl border-2 border-rose-500 mx-auto flex flex-col justify-center items-center gap-8 p-8'>
-          <div className='max-w-3xl text-center'>
+          <div className='max-w-3xl text-center font-bold'>
             <h1 className='sm:text-2xl md:text-4xl font-montserrat'>
               {post?.title}
             </h1>
           </div>
           <div>
-            <h2 className='border-2 border-teal-500 py-1 px-2 rounded-xl'>{post?.category}</h2>
+            <h2 className='border-2 border-teal-500 py-1 px-2 rounded-xl font-bold'>{post?.category}</h2>
           </div>
           <div className='p-2'>
             <LazyLoadImage src={post?.postPic} alt="PostPic" className='
@@ -73,6 +74,9 @@ export default function Post() {
           </div>
           <div className='w-full p-5 post-description'>
             {parse(String(post?.description))}
+          </div>
+          <div className='w-full'>
+            <Github />
           </div>
         </div>
       }

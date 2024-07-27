@@ -1,11 +1,10 @@
 import React from 'react'
-
+import Github from '../components/Github'
 function ProjectPage() {
-  return (
-    <div>
-      ProjectPage
-    </div>
-  )
+  return <div className='min-h-screen w-full grid place-items-center'>
+    <Github />
+  </div>
+
 }
 
 export default ProjectPage

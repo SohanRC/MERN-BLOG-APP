@@ -6,7 +6,7 @@ export default function Loader() {
     const theme = useSelector((state) => state.theme.theme);
     return (
         <HashLoader
-            color={`${theme === 'dark' ? 'white' : null}`}
+            color={`${theme === 'dark' ? 'white' : 'teal'}`}
             loading={true}
             size={60}
             aria-label="Loading Spinner"
