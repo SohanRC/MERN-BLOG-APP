@@ -37,6 +37,7 @@ export const uploadImage = async (req, res, next) => {
             return;
         }
 
+
         return res.status(200).json({
             success: true,
             message: "Image Uplaoded !",
@@ -87,7 +88,7 @@ export const updateUser = async (req, res, next) => {
 
         // All Ok
         // hash passowrd
-        const hashedPassword = await bcryptjs.hash(updatedPassword, 10);
+        const hashedPassword = updatedPassword ? await bcryptjs.hash(updatedPassword, 10) : currentUser.password;
 
 
         // update the user

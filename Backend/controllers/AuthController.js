@@ -10,10 +10,10 @@ export async function signIn(req, res, next) {
     const { email, password } = req.body;
     try {
         let existingUser = await UserModel.findOne({ email });
-        if (!existingUser) next(errorHandler(404, "User Not Found !"));
-
+        if (!existingUser) return next(errorHandler(404, "User Not Found !"));
+        
         let result = await bcryptjs.compare(password, existingUser.password);
-        if (!result) next(errorHandler(404, "Incorrect Password !"));
+        if (!result) return next(errorHandler(404, "Incorrect Password !"));
 
         const tokenOptions = {
             expiresIn: 1000 * 60 * 60 * 2,
@@ -48,7 +48,7 @@ export async function signUp(req, res, next) {
 
 
             const newUser = await UserModel.create({
-                username, email, password: hashedPassword,
+                username, email, password : hashedPassword,
             })
 
             return res.status(200).json({ success: true, message: "User Created Successfully !" })

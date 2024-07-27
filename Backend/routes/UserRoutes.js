@@ -6,13 +6,13 @@ import { AdminCheck } from "../middleware/AdminCheck.js"
 
 const fileUploadconfig = {
     useTempFiles: true,
-    tempFileDir: '/tmp/'
+    tempFileDir: '/tmp/',
 };
 
 router.get('/getAllUsers', AdminCheck, getAllUsers)
 router.post('/imageUpload', fileUpload(fileUploadconfig), uploadImage)
 router.post('/deleteImage', deleteImage)
-router.patch('/updateUser', AdminCheck, updateUser)
+router.patch('/updateUser', updateUser)
 router.delete('/deleteUser/:id', AdminCheck, deleteUser)
 
 

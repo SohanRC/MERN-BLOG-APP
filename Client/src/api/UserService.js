@@ -42,7 +42,9 @@ class UserService {
 
     async deleteUser(id) {
         try {
-            return await axios.delete(`/user/deleteUser/${id}`);
+            return await axios.delete(`/user/deleteUser/${id}`, {
+                withCredentials : true,
+            });
         } catch (error) {
             return error
         }
