@@ -43,7 +43,7 @@ class UserService {
     async deleteUser(id) {
         try {
             return await axios.delete(`/user/deleteUser/${id}`, {
-                withCredentials : true,
+                withCredentials: true,
             });
         } catch (error) {
             return error
@@ -53,7 +53,7 @@ class UserService {
     async getAllUsers() {
         try {
             return await axios.get('/user/getAllUsers', {
-                withCredentials : true,
+                withCredentials: true,
             });
         } catch (error) {
             console.log(error)
@@ -64,8 +64,21 @@ class UserService {
     async getParticularUser(userId) {
         try {
             return await axios.get(`/user/getUser/${userId}`, {
-                withCredentials : true
-            })            
+                withCredentials: true
+            })
+        } catch (error) {
+            return error
+        }
+    }
+
+    async getSearchUser(query) {
+        try {
+            let uri = '/user/getSearchUsers?';
+            for (let keys in query) uri = uri + `${keys}=${query[keys]}&`;
+            let arr = uri.split('')
+            arr.splice(arr.length - 1, 1);
+            uri = arr.join('');
+            return await axios.get(uri, {withCredentials : true});
         } catch (error) {
             return error
         }

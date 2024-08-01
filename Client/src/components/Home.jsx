@@ -79,7 +79,7 @@ export default function Home() {
                                         {
                                             recentPosts.map((post) => {
                                                 return <Link to={`/post/${post._id}`}>
-                                                    <ArticleCard post={post} key={post._id} />
+                                                    <ArticleCard post={post} key={post._id} className="card md:h-96 md:w-80 h-auto w-72"/>
                                                 </Link>
                                             })
                                         }
@@ -88,12 +88,8 @@ export default function Home() {
                                         <h1 className=' text-3xl md:text-5xl text-center'>No recent Articles !</h1>
                                     </>
                             }
-                            {/* // <ArticleCard />
-                            // <ArticleCard />
-                            // <ArticleCard /> */}
                         </div>
                 }
-
             </div>
 
         </div>

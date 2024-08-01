@@ -4,7 +4,6 @@ import { IconButton } from '@mui/material'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ChatRoundedIcon from '@mui/icons-material/ChatRounded';
 import PeopleOutlineRoundedIcon from '@mui/icons-material/PeopleOutlineRounded';
 import PostAddRoundedIcon from '@mui/icons-material/PostAddRounded';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
@@ -35,13 +34,13 @@ export default function DashSidebar({ tab }) {
             tab: "profile",
             authStatus: null,
         },
-        {
-            Icon: <ChatRoundedIcon className='text-slate-500' />,
-            text: "Comments",
-            url: "/dashboard?tab=comments",
-            tab: "comments",
-            authStatus: user.isAdmin,
-        },
+        // {
+        //     Icon: <ChatRoundedIcon className='text-slate-500' />,
+        //     text: "Comments",
+        //     url: "/dashboard?tab=comments",
+        //     tab: "comments",
+        //     authStatus: user.isAdmin,
+        // },
         {
             Icon: <PeopleOutlineRoundedIcon className='text-slate-500' />,
             text: "Users",

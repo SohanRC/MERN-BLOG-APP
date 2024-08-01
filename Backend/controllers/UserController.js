@@ -175,3 +175,38 @@ export const getParticularUser = async (req, res, next) => {
         next(error)
     }
 }
+
+export const getSearchUsers = async (req, res, next) => {
+    try {
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
+        const sortDirection = req.query.order === 'asc' ? 1 : -1;
+
+        const users = await UserModel.find({
+            ...(req.query.userId && {_id: req.query.userId }),
+        }).sort({ updatedAt: sortDirection }).skip(startIndex).limit(limit);
+
+        const totalUsers = await UserModel.countDocuments();
+
+        const now = new Date();
+        const oneMonthAgo = new Date(
+            now.getFullYear(),
+            now.getMonth() - 1,
+            now.getDate(),
+        )
+
+        const lastMonthUsers = await UserModel.countDocuments({
+            createdAt: { $gte: oneMonthAgo },
+        })
+
+        return res.status(201).json({
+            success: true,
+            message: "Search Successful !",
+            users,
+            totalUsers,
+            lastMonthUsers
+        })
+    } catch (error) {
+        next(error)
+    }
+}

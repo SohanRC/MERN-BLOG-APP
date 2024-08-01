@@ -33,7 +33,6 @@ class PostService {
 
     async getPost(query) {
         try {
-            console.log(query)
             let uri = '/post/getSearchPosts?';
             for (let keys in query) uri = uri + `${keys}=${query[keys]}&`;
             let arr = uri.split('')

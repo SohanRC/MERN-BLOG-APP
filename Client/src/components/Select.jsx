@@ -25,7 +25,7 @@ const SelectComponent = forwardRef(function SelectComponent({
                         select
                         value={value}
                         onChange={onChange}
-                        sx={{ width: "10rem" }}
+                        sx={{ width: "10rem", color : 'white' }}
                     >
                         {
                             list.map((item) => <MenuItem key={item.id} value={item.value}>{item.value.toUpperCase()}</MenuItem>)
