@@ -20,6 +20,9 @@ export default function Post() {
   const currentUser = useSelector((state) => state.user.userData)
 
 
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [])
 
   useEffect(() => {
 
