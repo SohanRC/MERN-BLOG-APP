@@ -33,7 +33,7 @@ const navItems = [
     url: '/about',
   },
   {
-    text: 'Projects',
+    text: 'Articles',
     url: '/projects',
   },
 ]
