@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import postService from '../api/PostService';
 import toast from 'react-hot-toast';
@@ -8,12 +8,18 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import parse from 'html-react-parser'
 import Github from './Github';
+import { useSelector, useDispatch } from 'react-redux';
+import { Button } from '@mui/material';
+import CommentSection from './CommentSection';
 
 export default function Post() {
   const { postId } = useParams();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [post, setPost] = useState({});
+  const currentUser = useSelector((state) => state.user.userData)
+
+
 
   useEffect(() => {
 
@@ -46,6 +52,7 @@ export default function Post() {
     getPost();
   }, [postId])
 
+
   return (
     <div className='min-h-screen w-[100vw]'>
       {loading ?
@@ -53,7 +60,7 @@ export default function Post() {
           <Loader />
         </div>
         :
-        <div className='max-w-6xl border-2 border-rose-500 mx-auto flex flex-col justify-center items-center gap-8 p-8'>
+        <div className='max-w-6xl mx-auto flex flex-col justify-center items-center gap-8 p-8'>
           <div className='max-w-3xl text-center font-bold'>
             <h1 className='sm:text-2xl md:text-4xl font-montserrat'>
               {post?.title}
@@ -70,7 +77,7 @@ export default function Post() {
             <div className='flex justify-end p-2 text-xm'>
               <p>Created At : {new Date(post?.createdAt).toLocaleDateString()}</p>
             </div>
-            <hr className='dark:bg-white bg-slate-700 w-full' />
+            <hr className='dark:bg-white bg-slate-200 w-full h-1' />
           </div>
           <div className='w-full p-5 post-description'>
             {parse(String(post?.description))}
@@ -78,10 +85,13 @@ export default function Post() {
           <div className='w-full'>
             <Github />
           </div>
+
+          
+          <div className='comments w-full'>
+            <CommentSection postId={postId} />
+          </div>
         </div>
       }
     </div>
   )
-
-
 }

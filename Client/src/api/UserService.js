@@ -60,6 +60,16 @@ class UserService {
             return error;
         }
     }
+
+    async getParticularUser(userId) {
+        try {
+            return await axios.get(`/user/getUser/${userId}`, {
+                withCredentials : true
+            })            
+        } catch (error) {
+            return error
+        }
+    }
 }
 
 

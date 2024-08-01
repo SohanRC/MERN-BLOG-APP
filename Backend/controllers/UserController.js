@@ -157,3 +157,21 @@ export const getAllUsers = async (req, res, next) => {
         next(error)
     }
 }
+
+export const getParticularUser = async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+
+        let userDetails = await UserModel.findOne({ _id: userId });
+
+        const { password: hash, ...user } = userDetails._doc;
+
+        return res.status(201).json({
+            success: true,
+            message: "User fetched Successful !",
+            user,
+        })
+    } catch (error) {
+        next(error)
+    }
+}

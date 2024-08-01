@@ -3,7 +3,7 @@ import { config } from "dotenv"
 config();
 import cors from "cors"
 import { dbConnect } from "./config/dbConnect.js";
-import { AuthRoutes, UserRoutes, PostRoutes } from "./routes/routes.js";
+import { AuthRoutes, UserRoutes, PostRoutes, CommentRoutes } from "./routes/routes.js";
 import { v2 as cloudinary } from "cloudinary"
 import cookieParser from "cookie-parser";
 
@@ -33,6 +33,7 @@ app.use(cookieParser());
 app.use('/api/auth', AuthRoutes)
 app.use('/api/user', UserRoutes)
 app.use('/api/post', PostRoutes)
+app.use('/api/comment', CommentRoutes)
 
 
 
