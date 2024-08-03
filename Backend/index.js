@@ -22,8 +22,7 @@ cloudinary.config({
 })
 app.use(express.json())
 app.use(cors({
-    origin: true,
-    methods : ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    origin: 'https://mern-blog-app-steel.vercel.app/',
     credentials: true,
 }))
 app.use(cookieParser());
