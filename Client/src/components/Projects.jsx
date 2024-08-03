@@ -249,7 +249,7 @@ export default function Projects() {
                                         {
                                             allPosts.map((post) => {
                                                 return <Link to={`/post/${post._id}`} key={post._id}>
-                                                    <ArticleCard post={post} key={post._id} className="card md:h-96 md:w-80 h-auto w-72" />
+                                                    <ArticleCard post={post} key={post._id} className="card h-[30rem] md:w-80 w-72" />
                                                 </Link>
                                             })
                                         }
