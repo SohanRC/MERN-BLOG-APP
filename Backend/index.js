@@ -22,7 +22,7 @@ cloudinary.config({
 })
 app.use(express.json())
 app.use(cors({
-    origin: 'https://mern-blog-ja098v3v2-sohan-roychowdhurys-projects.vercel.app/',
+    origin: true,
     credentials: true,
 }))
 app.use(cookieParser());
