@@ -23,6 +23,7 @@ cloudinary.config({
 app.use(express.json())
 app.use(cors({
     origin: true,
+    methods : ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,
 }))
 app.use(cookieParser());
