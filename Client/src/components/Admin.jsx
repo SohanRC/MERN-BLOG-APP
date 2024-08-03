@@ -102,7 +102,7 @@ export default function Admin() {
 
 
   return (
-    <div className='min-h-screen w-full p-10  font-montserrat'>
+    <div className='min-h-screen max-w-full p-10  font-montserrat'>
       <div className='w-full flex justify-evenly items-center gap-5 flex-wrap'>
         <Link to='/dashboard?tab=users'>
           <div className="users flex justify-center items-center gap-12 border-2 border-teal-500 p-2 shadow-slate-500 shadow-lg dark:shadow-teal-400 rounded-lg">
@@ -138,7 +138,7 @@ export default function Admin() {
               </Button>
             </Link>
           </h1>
-          <TableContainer component={Paper} className=' md:w-full bg-slate-100 dark:bg-[rgb(31,41,55)] self-start w-72'>
+          <TableContainer component={Paper} className='max-w-96 md:max-w-full bg-slate-100 dark:bg-[rgb(31,41,55)] self-start w-72'>
             <Table sx={{ minWidth: 300 }} aria-label="simple table" className='w-full'>
               <TableHead>
                 <TableRow>
@@ -173,8 +173,8 @@ export default function Admin() {
               </Button>
             </Link>
           </h1>
-          <TableContainer component={Paper} className=' w-96 md:w-full bg-slate-100 dark:bg-[rgb(31,41,55)] self-start'>
-            <Table sx={{ minWidth: 300 }} aria-label="simple table" className='w-full'>
+          <TableContainer component={Paper} className=' max-w-96 md:max-w-full bg-slate-100 dark:bg-[rgb(31,41,55)] self-start'>
+            <Table sx={{ minWidth: 200 }} aria-label="simple table" className='w-full'>
               <TableHead>
                 <TableRow>
                   <TableCell >POST IMAGE</TableCell>

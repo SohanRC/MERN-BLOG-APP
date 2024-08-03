@@ -11,7 +11,7 @@ export default function Comment({ comment, handleLike, handleDeleteComment, hand
 
     const [commentUser, setCommentUser] = useState({});
     const currentUser = useSelector((state) => state.user.userData);
-    const liked = comment.likes.includes(currentUser._id);
+    const liked = comment.likes.includes(currentUser?._id);
     const [showEdit, setShowEdit] = useState(false)
     const [commentBox, setCommentBox] = useState(comment.content);
 
@@ -41,29 +41,18 @@ export default function Comment({ comment, handleLike, handleDeleteComment, hand
 
     }, [])
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         await 
-            
-    //     } catch (error) {
-    //         setShowEdit(false);
-    //         setCommentBox(comment.content);
-    //     }
-        
-    // }
 
 
     return (
         <li className='w-full flex justify-start items-center gap-2 border-b-2 border-slate-500 p-2 mb-2 flex-wrap'>
             <div>
-                <LazyLoadImage src={commentUser.profilePic} alt="Profile Pic" className=' h-9 w-9 rounded-full object-cover' placeholderSrc='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png' />
+                <LazyLoadImage src={commentUser?.profilePic} alt="Profile Pic" className=' h-9 w-9 rounded-full object-cover' placeholderSrc='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png' />
             </div>
             <div className='flex flex-col gap-2 justify-start items-start'>
                 <div>
-                    <p className='text-sm mb-1'>{commentUser.username}<span className='ml-2'>{moment(comment.createdAt).fromNow()}</span></p>
+                    <p className='text-sm mb-1'>{commentUser?.username}<span className='ml-2'>{moment(comment?.createdAt).fromNow()}</span></p>
                     {
-                        !showEdit && <p className='border-b-[1px] border-slate-500 p-1'>{comment.content}</p>
+                        !showEdit && <p className='border-b-[1px] border-slate-500 p-1'>{comment?.content}</p>
                     }
                 </div>
                 <div className='flex gap-2 items-center flex-wrap'>
@@ -80,13 +69,13 @@ export default function Comment({ comment, handleLike, handleDeleteComment, hand
                                 />
                                 <span>{comment.numberOfLikes} Likes</span>
                                 {
-                                    (currentUser.isAdmin || currentUser._id === comment.userId) ?
+                                    (currentUser?.isAdmin || currentUser?._id === comment?.userId) ?
                                         <>
                                             <Button size='small'
                                                 className='dark:text-white'
                                                 onClick={() => setShowEdit(true)}
                                             >Edit</Button>
-                                            <Button size='small' className='dark:text-white' onClick={() => handleDeleteComment(comment._id)} >Delete</Button>
+                                            <Button size='small' className='dark:text-white' onClick={() => handleDeleteComment(comment?._id)} >Delete</Button>
 
                                         </> : null
                                 }
@@ -102,7 +91,7 @@ export default function Comment({ comment, handleLike, handleDeleteComment, hand
                                     <Button
                                         type='button'
                                         onClick={() => {
-                                            handleEdit(comment._id, commentBox);
+                                            handleEdit(comment?._id, commentBox);
                                             setShowEdit(false);
                                         }}
                                     >
@@ -111,7 +100,7 @@ export default function Comment({ comment, handleLike, handleDeleteComment, hand
                                     <Button
                                         type='button'
                                         onClick={() => {
-                                            setCommentBox(comment.content)
+                                            setCommentBox(comment?.content)
                                             setShowEdit(false)
                                         }}
                                     >
