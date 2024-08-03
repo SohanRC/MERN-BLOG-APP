@@ -26,7 +26,7 @@ export async function signIn(req, res, next) {
 
         const { password: hashedPassword, ...restUserDetails } = existingUser._doc;
 
-        return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 2}).status(200).json({
+        return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 2, sameSite: 'None'}).status(200).json({
             success: true,
             message: "User SignIn Successful !",
             user: restUserDetails,
@@ -78,7 +78,7 @@ export async function googleSignIn(req, res, next) {
 
             const { password: hashedPassword, ...restUserDetails } = existingUser._doc;
 
-            return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 2}).status(200).json({
+            return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 2, sameSite: 'None'}).status(200).json({
                 success: true,
                 message: "User SignIn Successful !",
                 user: restUserDetails,
@@ -108,7 +108,7 @@ export async function googleSignIn(req, res, next) {
 
             const { password: hash, ...restUserDetails } = newUser._doc;
 
-            return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 2}).status(200).json({
+            return res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 2, sameSite: 'None'}).status(200).json({
                 success: true,
                 message: "User SignUP Successful !",
                 user: restUserDetails,
