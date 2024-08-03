@@ -30,7 +30,7 @@ export default function Projects() {
         setLoading(true);
         try {
             let res = await postService.getPost({
-                order: getValues('sort'),               
+                order: getValues('sort'),
                 startIndex: allPosts.length,
             })
             setLoading(false)
@@ -107,18 +107,23 @@ export default function Projects() {
         },
         {
             id: 2,
-            value: "react-js",
-            text: "react-js"
+            value: "sports",
+            text: "Sports"
         },
         {
             id: 3,
-            value: "next-js",
-            text: "next-js",
+            value: "movies",
+            text : "Movies",
         },
         {
             id: 4,
-            value: "javascipt",
-            text: "javascipt",
+            value: "technology",
+            text : "Technology"
+        },
+        {
+            id: 5,
+            value: "travel",
+            text : "Travel"
         },
     ]
 
@@ -250,7 +255,7 @@ export default function Projects() {
                                         }
                                     </> :
                                     <>
-                                        <h1 className=' text-3xl md:text-5xl text-center bg-red-500'>No  Articles Found !</h1>
+                                        <h1 className=' text-3xl md:text-5xl text-center text-white'>No  Articles Found !</h1>
                                     </>
                             }
                         </div>
