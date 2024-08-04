@@ -3,6 +3,7 @@ import { Stack, IconButton, Divider } from '@mui/material'
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Link } from 'react-router-dom'
 
 export default function Footer() {
     return (
@@ -16,13 +17,22 @@ export default function Footer() {
                 <div className='p-2'>
                     <Stack spacing={2} direction="row" flexWrap='wrap'>
                         <IconButton color='inherit'>
-                            <InstagramIcon color='error' sx={{ bgcolor: 'white' }} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250' />
+                            <Link to='https://www.instagram.com/_itz_sohan7_/'>
+                                <InstagramIcon color='error' sx={{ bgcolor: 'white' }} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250' />
+                            </Link>
+                            
                         </IconButton >
                         <IconButton color='inherit'>
-                            <FacebookIcon color='primary' sx={{ bgcolor: 'white' }} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250' />
+                            <Link to='https://www.facebook.com/sohan.roychowdhury.96'>
+                                <FacebookIcon color='primary' sx={{ bgcolor: 'white' }} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250' />
+                            </Link>
+                            
                         </IconButton >
                         <IconButton color='inherit'>
-                            <LinkedInIcon color='primary' sx={{ bgcolor: 'white' }} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250' />
+                            <Link to='https://www.linkedin.com/in/sohan-roychowdhury-363440256/'>
+                                <LinkedInIcon color='primary' sx={{ bgcolor: 'white' }} className='rounded-full p-1 text-4xl hover:scale-[1.2] hover:shadow-lg transition-all duration-250' />
+                            </Link>
+                            
                         </IconButton>
                     </Stack>
                 </div>
