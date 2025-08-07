@@ -24,13 +24,13 @@ export default function MenuDropdown() {
         navigate('/signin');
     }
 
-    const user = useSelector((state) => state.user.userData)
+    const user = useSelector((state) => state.user?.userData)
 
     const menuItems = [
         {
             text: "Dashboard",
             url: "/dashboard?tab=dashboard",
-            authStatus: user.isAdmin,
+            authStatus: user?.isAdmin,
         },
         {
             text: "Profile",
@@ -64,7 +64,7 @@ export default function MenuDropdown() {
                 onClick={handleClick}
                 sx={{ color: 'white' }}
             >
-                <img src={user.profilePic} alt="Profile Picture" className='rounded-full h-10 w-10' />
+                <img src={user?.profilePic} alt="Profile Picture" className='rounded-full h-10 w-10' />
             </Button>
             <Menu
                 id="basic-menu"
